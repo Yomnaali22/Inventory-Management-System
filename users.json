@@ -1,0 +1,4 @@
+[
+  { "name": "admin", "password": "pass" },
+  { "name": "manager", "password": "store_pass" }
+]
