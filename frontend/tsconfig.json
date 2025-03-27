@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "types": ["@tauri-apps/api"]
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

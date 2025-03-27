@@ -1,8 +1,25 @@
 [package]
-name = "inventory_management_system"
+name = "inventory_lib"      # This is your library name
 version = "0.1.0"
 edition = "2024"
+
+[workspace]
+members = [ ".", "src-tauri"]
+
+
+[lib]
+name = "inventory_lib"      # Must match package name
+path = "src/lib.rs"         # Path to library entry point
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+tauri = { version = "2.4.0", features = [] }
+tauri-build = "2.1.0"
+axum = "0.7"
+tokio = "1.44.1"
+tower-http = { version = "0.5", features = ["cors"] }  # ✅ Enable CORS middleware
+
+[build-dependencies]
+tauri-build = { version = "2.1.0", features = [] }
+tower-http = { version = "0.5", features = ["cors"] }  # ✅ Enable CORS middleware
