@@ -1,8 +1,7 @@
 # Inventory Management System for Small Retail Store
-![Alt Text]("./frontend/public/Screenshot 2025-03-27 at 7.09.55 PM.png")
-![Alt Text]("./frontend/public/Screenshot 2025-03-27 at 7.16.55 PM.png")
-![Alt Text]("./frontend/public/Screenshot 2025-03-27 at 7.17.08 PM.png")
-
+![Screenshot 1](./frontend/public/Screenshot-2025-03-27-at-7.09.55-PM.jpeg)
+![Screenshot 2](./frontend/public/Screenshot-2025-03-27-at-7.16.55-PM.jpeg)
+![Screenshot 3](./frontend/public/Screenshot-2025-03-27-at-7.17.08-PM.jpeg)
 
 
 
