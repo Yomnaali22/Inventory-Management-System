@@ -1,4 +1,5 @@
 # Inventory Management System for Small Retail Store
+![Screenshot 4](./frontend/public/screenshot4.jpeg)
 ![Screenshot 1](./frontend/public/screenshot1.jpeg)
 ![Screenshot 2](./frontend/public/screenshot2.jpeg)
 ![Screenshot 3](./frontend/public/screenshot3.jpeg)

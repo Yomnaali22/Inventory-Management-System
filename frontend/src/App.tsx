@@ -15,11 +15,13 @@ import {
   RecordSaleForm,
   RecordPurchaseForm,
   InventoryReport,
+  LoginForm,
 } from "./components";
 import "./App.css";
 import { fetch_inventory, add_product } from "./api";
 const App: React.FC = () => {
   const [activeForm, setActiveForm] = useState<FormType>(null);
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [inventory, setInventory] = useState<Inventory>({
     products: [],
     sales: [],
@@ -177,7 +179,15 @@ const App: React.FC = () => {
             overflow: "auto",
           }}
         >
-          {renderForm()}
+          {!loginSuccess ? (
+            <LoginForm
+              onSubmit={() => {
+                setLoginSuccess(true);
+              }}
+            />
+          ) : (
+            renderForm()
+          )}
         </Paper>
       </Container>
     </ThemeProvider>
