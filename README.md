@@ -1,4 +1,10 @@
 # Inventory Management System for Small Retail Store
+![Alt Text]("./frontend/public/Screenshot 2025-03-27 at 7.09.55 PM.png")
+![Alt Text]("./frontend/public/Screenshot 2025-03-27 at 7.16.55 PM.png")
+![Alt Text]("./frontend/public/Screenshot 2025-03-27 at 7.17.08 PM.png")
+
+
+
 
 This project is an **Inventory Management System (IMS)** built in Rust for managing a small retail store's **inventory**, **sales**, and **purchases**. It allows store managers to effectively track and control products, sales, and purchases while providing a simple text-based user interface.
 

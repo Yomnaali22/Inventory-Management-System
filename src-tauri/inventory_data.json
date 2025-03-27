@@ -8,25 +8,13 @@
     },
     {
       "name": "Banana",
-      "description": "G",
+      "description": "Banana",
       "quantity": 30.0,
       "price": 30.0
     },
     {
-      "name": "G",
-      "description": "G",
-      "quantity": 30.0,
-      "price": 30.0
-    },
-    {
-      "name": "ff",
-      "description": "",
-      "quantity": 30.0,
-      "price": 29.99
-    },
-    {
-      "name": "Meow",
-      "description": "meow meow meow",
+      "name": "Milk",
+      "description": "Milk",
       "quantity": 30.0,
       "price": 30.0
     }
