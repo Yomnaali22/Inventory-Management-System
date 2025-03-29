@@ -2,13 +2,13 @@ import React from "react";
 import { Box, TextField, Button, Typography, Grid } from "@mui/material";
 
 interface LoginFormProps {
-  onSubmit: (credentials: { username: string; password: string }) => void;
+  onSubmit: (credentials: { name: string; password: string }) => void;
   onCancel?: () => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onCancel }) => {
   const [credentials, setCredentials] = React.useState({
-    username: "",
+    name: "",
     password: "",
   });
 
@@ -22,6 +22,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onCancel }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("credentials: ", credentials);
+
     onSubmit(credentials);
   };
 
@@ -40,8 +42,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, onCancel }) => {
         <TextField
           fullWidth
           label="Username"
-          name="username"
-          value={credentials.username}
+          name="name"
+          value={credentials.name}
           onChange={handleChange}
           required
           autoFocus

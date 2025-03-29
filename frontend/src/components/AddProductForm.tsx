@@ -19,14 +19,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProduct(prev => ({
-      ...prev,
-      [name]:
-        name === "quantity" || name === "price"
-          ? parseFloat(value) || 0
-          : value,
-    }));
+    const t = e.target;
+    setProduct({
+      name: t.name === "name" ? t.value : product.name,
+      quantity: t.name === "quantity" ? parseFloat(t.value) : product.quantity,
+      price: t.name === "price" ? parseFloat(t.value) : product.price,
+      description: t.name === "description" ? t.value : product.description,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {

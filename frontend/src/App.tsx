@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   CssBaseline,
@@ -8,7 +8,13 @@ import {
   Paper,
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { Inventory, Product, Sale, Purchase, FormType } from "./types";
+import {
+  Product,
+  FormType,
+  LoginResponse,
+  PurchaseTransaction,
+  saleTransaction,
+} from "./types";
 import darkTheme from "./theme/theme";
 import {
   AddProductForm,
@@ -18,42 +24,30 @@ import {
   LoginForm,
 } from "./components";
 import "./App.css";
-import { fetch_inventory, add_product } from "./api";
+import {
+  add_product,
+  login,
+  record_purchase_transaction,
+  record_sale_transaction,
+} from "./api";
 const App: React.FC = () => {
   const [activeForm, setActiveForm] = useState<FormType>(null);
-  const [loginSuccess, setLoginSuccess] = useState(false);
-  const [inventory, setInventory] = useState<Inventory>({
-    products: [],
-    sales: [],
-    purchases: [],
+  const [loginSuccess, setLoginSuccess] = useState<LoginResponse>({
+    loggedIn: false,
+    errorMessage: null,
   });
 
-  useEffect(() => {
-    fetch_inventory(setInventory);
-  }, []);
-
   const handleAddProduct = (product: Product) => {
-    setInventory(prev => ({
-      ...prev,
-      products: [...prev.products, product],
-    }));
     setActiveForm(null);
     add_product(product);
   };
-
-  const handleRecordSale = (sale: Sale) => {
-    setInventory(prev => ({
-      ...prev,
-      sales: [...prev.sales, sale],
-    }));
+  const handleRecordSale = (sale: saleTransaction) => {
+    record_sale_transaction(sale);
     setActiveForm(null);
   };
 
-  const handleRecordPurchase = (purchase: Purchase) => {
-    setInventory(prev => ({
-      ...prev,
-      purchases: [...prev.purchases, purchase],
-    }));
+  const handleRecordPurchase = async (purchase: PurchaseTransaction) => {
+    record_purchase_transaction(purchase);
     setActiveForm(null);
   };
 
@@ -81,12 +75,7 @@ const App: React.FC = () => {
           />
         );
       case "report":
-        return (
-          <InventoryReport
-            inventory={inventory}
-            onClose={() => setActiveForm(null)}
-          />
-        );
+        return <InventoryReport onClose={() => setActiveForm(null)} />;
       default:
         return (
           <Box sx={{ mt: 3, textAlign: "center" }}>
@@ -179,15 +168,20 @@ const App: React.FC = () => {
             overflow: "auto",
           }}
         >
-          {!loginSuccess ? (
+          {loginSuccess.loggedIn ? (
+            renderForm()
+          ) : (
             <LoginForm
-              onSubmit={() => {
-                setLoginSuccess(true);
+              onSubmit={credentials => {
+                login(credentials, setLoginSuccess);
               }}
             />
-          ) : (
-            renderForm()
           )}
+          {!loginSuccess.loggedIn ? (
+            <Typography variant="body1" color={"error"} sx={{ mt: 3 }}>
+              {loginSuccess.errorMessage}
+            </Typography>
+          ) : null}
         </Paper>
       </Container>
     </ThemeProvider>

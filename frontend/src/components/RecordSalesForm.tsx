@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, TextField, Button, Typography, Grid } from "@mui/material";
-import { Sale } from "../types";
+import { saleTransaction } from "../types";
 
 interface RecordSaleFormProps {
-  onSubmit: (sale: Sale) => void;
+  onSubmit: (sale: saleTransaction) => void;
   onCancel: () => void;
 }
 
@@ -11,21 +11,21 @@ const RecordSaleForm: React.FC<RecordSaleFormProps> = ({
   onSubmit,
   onCancel,
 }) => {
-  const [sale, setSale] = React.useState<Sale>({
+  const [sale, setSale] = React.useState<saleTransaction>({
     product_sold: "",
-    quantity_sold: 0,
-    sale_price: 0,
+    quantity_sold: 0.0,
+    sale_price: 0.0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSale(prev => ({
-      ...prev,
-      [name]:
-        name === "quantity" || name === "sold_price"
-          ? parseFloat(value) || 0
-          : value,
-    }));
+    const t = e.target;
+    setSale({
+      product_sold: t.name === "Product sold" ? t.value : sale.product_sold,
+      quantity_sold:
+        t.name === "Quantity Sold" ? parseFloat(t.value) : sale.quantity_sold,
+      sale_price:
+        t.name === "Sale Price" ? parseFloat(t.value) : sale.sale_price,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,7 +48,7 @@ const RecordSaleForm: React.FC<RecordSaleFormProps> = ({
         <TextField
           fullWidth
           label="Product Sold"
-          name="product_sold"
+          name="Product sold"
           value={sale.product_sold}
           onChange={handleChange}
           required
@@ -56,7 +56,7 @@ const RecordSaleForm: React.FC<RecordSaleFormProps> = ({
         <TextField
           fullWidth
           label="Quantity Sold"
-          name="quantity"
+          name="Quantity Sold"
           type="number"
           inputProps={{ step: "0.01" }}
           value={sale.quantity_sold}
@@ -67,7 +67,7 @@ const RecordSaleForm: React.FC<RecordSaleFormProps> = ({
         <TextField
           fullWidth
           label="Sale Price"
-          name="sold_price"
+          name="Sale Price"
           type="number"
           inputProps={{ step: "0.01" }}
           value={sale.sale_price}

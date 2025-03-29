@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -12,16 +12,24 @@ import {
   Paper,
 } from "@mui/material";
 import { Inventory } from "../types";
+import { fetch_inventory } from "../api";
 
 interface InventoryReportProps {
-  inventory: Inventory;
   onClose: () => void;
 }
 
-const InventoryReport: React.FC<InventoryReportProps> = ({
-  inventory,
-  onClose,
-}) => {
+const InventoryReport: React.FC<InventoryReportProps> = ({ onClose }) => {
+  const [inventory, setInventory] = useState<Inventory>({
+    products: [],
+    sales: [],
+    purchases: [],
+  });
+
+  console.log("inventory", inventory);
+
+  useEffect(() => {
+    fetch_inventory(setInventory);
+  }, []);
   return (
     <Box sx={{ mt: 2 }} width={"100%"}>
       <Typography
@@ -76,6 +84,8 @@ const InventoryReport: React.FC<InventoryReportProps> = ({
               <TableCell>Product Sold</TableCell>
               <TableCell align="right">Quantity Sold</TableCell>
               <TableCell align="right">Sale Price</TableCell>
+              <TableCell align="right">Total Sales</TableCell>
+              <TableCell align="right">Profit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -84,6 +94,8 @@ const InventoryReport: React.FC<InventoryReportProps> = ({
                 <TableCell>{sale.product_sold}</TableCell>
                 <TableCell align="right">{sale.quantity_sold}</TableCell>
                 <TableCell align="right">{sale.sale_price}</TableCell>
+                <TableCell align="right">{sale.total_sales}</TableCell>
+                <TableCell align="right">{sale.total_profit}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -100,6 +112,7 @@ const InventoryReport: React.FC<InventoryReportProps> = ({
               <TableCell>Product Purchased</TableCell>
               <TableCell align="right">Quantity</TableCell>
               <TableCell align="right">Purchase Price</TableCell>
+              <TableCell align="right">Total Cost</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -110,6 +123,7 @@ const InventoryReport: React.FC<InventoryReportProps> = ({
                   {purchase.quantity_purchased}
                 </TableCell>
                 <TableCell align="right">{purchase.purchase_price}</TableCell>
+                <TableCell align="right">{purchase.total_cost}</TableCell>
               </TableRow>
             ))}
           </TableBody>

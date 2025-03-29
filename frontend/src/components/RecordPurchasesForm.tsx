@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, TextField, Button, Typography, Grid } from "@mui/material";
-import { Purchase } from "../types";
+import { PurchaseTransaction } from "../types";
 
 interface RecordPurchaseFormProps {
-  onSubmit: (purchase: Purchase) => void;
+  onSubmit: (purchase: PurchaseTransaction) => void;
   onCancel: () => void;
 }
 
@@ -11,21 +11,26 @@ const RecordPurchaseForm: React.FC<RecordPurchaseFormProps> = ({
   onSubmit,
   onCancel,
 }) => {
-  const [purchase, setPurchase] = React.useState<Purchase>({
+  const [purchase, setPurchase] = React.useState<PurchaseTransaction>({
     product_purchased: "",
     quantity_purchased: 0,
     purchase_price: 0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setPurchase(prev => ({
-      ...prev,
-      [name]:
-        name === "quantity" || name === "purchased_price"
-          ? parseFloat(value) || 0
-          : value,
-    }));
+    const t = e.target;
+    setPurchase({
+      product_purchased:
+        t.name === "product_purchased" ? t.value : purchase.product_purchased,
+      quantity_purchased:
+        t.name === "quantity"
+          ? parseFloat(t.value)
+          : purchase.quantity_purchased,
+      purchase_price:
+        t.name === "purchase_price"
+          ? parseFloat(t.value)
+          : purchase.purchase_price,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
