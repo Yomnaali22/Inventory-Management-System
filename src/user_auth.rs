@@ -1,14 +1,17 @@
+use crate::handle_env_variables;
 use crate::parse_data::JsonData;
 use serde::{Deserialize, Serialize};
 use std::io::{Write, stdin, stdout};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct User {
-    name: String,
-    password: String,
+    pub name: String,
+    pub password: String,
 }
-fn authenticate(username: &str, password: &str) -> Result<String, String> {
-    let users: Vec<User> = match JsonData::process("users.json") {
+
+pub fn authenticate(username: &str, password: &str) -> Result<User, String> {
+    let path = handle_env_variables("USERS_JSON_PATH");
+    let users: Vec<User> = match JsonData::process(&path) {
         Ok(users) => users,
         Err(err) => return Err(err.to_string()),
     };
@@ -17,13 +20,16 @@ fn authenticate(username: &str, password: &str) -> Result<String, String> {
         .any(|user| user.name == username && user.password == password);
 
     if valid {
-        Ok(String::from("Login successful!"))
+        Ok(User {
+            name: username.to_string(),
+            password: password.to_string(),
+        })
     } else {
-        Err(String::from("Invalid username or password"))
+        Err(format!("Invalid username or password. Please try again."))
     }
 }
 
-pub fn process_user_input() -> Result<String, String> {
+pub fn process_user_input() -> Result<User, String> {
     print!("Enter username: ");
     stdout().flush().unwrap();
     let mut username = String::new();
