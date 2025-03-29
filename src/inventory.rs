@@ -72,6 +72,7 @@ impl Inventory {
         product: &Product,
         operation_type: &str,
         inventory: &mut Inventory,
+        path: &str,
     ) -> Result<String> {
         // deserialize the existing inventory_data file
         match operation_type {
@@ -85,7 +86,7 @@ impl Inventory {
                 }
                 inventory.products.push(product.clone());
                 // serialize the data after changes made
-                JsonData::writes("./../inventory_data.json", inventory)?;
+                JsonData::writes(&path, inventory)?;
                 return Ok("Product added successfully".to_string());
             }
             "edit" => {
@@ -97,7 +98,7 @@ impl Inventory {
                     for p in inventory.products.iter_mut() {
                         if p.name == product.name {
                             *p = product.clone();
-                            JsonData::writes("inventory_data.json", inventory)?;
+                            JsonData::writes(&path, inventory)?;
                             return Ok("Product modified successfully".to_string());
                         }
                     }
@@ -114,7 +115,7 @@ impl Inventory {
                         .products
                         .retain(|p: &Product| *p.name != *product.name);
                     println!("{:?}", inventory);
-                    JsonData::writes("inventory_data.json", inventory)?;
+                    JsonData::writes(&path, inventory)?;
                     return Ok("Product deleted successfully".to_string());
                 }
                 return Ok("Failed to delete product".to_string());
