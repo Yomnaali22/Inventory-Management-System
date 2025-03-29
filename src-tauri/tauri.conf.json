@@ -28,7 +28,6 @@
     }
   },
   "bundle": {
-    "resources": ["../inventory_data.json"],
     "active": true,
     "targets": "all",
     "icon": [
