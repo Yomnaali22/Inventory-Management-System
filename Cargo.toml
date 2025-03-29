@@ -1,5 +1,5 @@
 [package]
-name = "inventory_lib"      # This is your library name
+name = "lib"      # This is your library name
 version = "0.1.0"
 edition = "2024"
 
@@ -8,18 +8,18 @@ members = [ ".", "src-tauri"]
 
 
 [lib]
-name = "inventory_lib"      # Must match package name
+name = "lib"      # Must match package name
 path = "src/lib.rs"         # Path to library entry point
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tauri = { version = "2.4.0", features = [] }
-tauri-build = "2.1.0"
 axum = "0.7"
 tokio = "1.44.1"
 tower-http = { version = "0.5", features = ["cors"] }  # ✅ Enable CORS middleware
+dotenv = "0.15"  # For loading .env files
+lazy_static = "1.4"  # For global configuration
+tauri-build = { version = "2.1.0", features = [] } # Must match exactly
 
-[build-dependencies]
-tauri-build = { version = "2.1.0", features = [] }
-tower-http = { version = "0.5", features = ["cors"] }  # ✅ Enable CORS middleware
+
