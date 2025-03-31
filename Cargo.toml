@@ -1,25 +1,15 @@
+# Root Cargo.toml
 [package]
-name = "lib"      # This is your library name
+name = "shared"  # Changed from "lib" to avoid confusion
 version = "0.1.0"
 edition = "2024"
 
-[workspace]
-members = [ ".", "src-tauri"]
-
-
-[lib]
-name = "lib"      # Must match package name
-path = "src/lib.rs"         # Path to library entry point
-
 [dependencies]
+# Remove tauri and tauri-build from here
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tauri = { version = "2.4.0", features = [] }
 axum = "0.7"
 tokio = "1.44.1"
-tower-http = { version = "0.5", features = ["cors"] }  # ✅ Enable CORS middleware
-dotenv = "0.15"  # For loading .env files
-lazy_static = "1.4"  # For global configuration
-tauri-build = { version = "2.1.0", features = [] } # Must match exactly
-
-
+tower-http = { version = "0.5", features = ["cors"] }
+dotenv = "0.15"
+lazy_static = "1.4"
