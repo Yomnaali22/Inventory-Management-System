@@ -14,23 +14,20 @@ const RecordPurchaseForm: React.FC<RecordPurchaseFormProps> = ({
   const [purchase, setPurchase] = React.useState<PurchaseTransaction>({
     product_purchased: "",
     quantity_purchased: 0,
-    purchase_price: 0,
+    purchase_price: 0.0,
+    total_cost: 0.0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const t = e.target;
-    setPurchase({
-      product_purchased:
-        t.name === "product_purchased" ? t.value : purchase.product_purchased,
-      quantity_purchased:
-        t.name === "quantity"
-          ? parseFloat(t.value)
-          : purchase.quantity_purchased,
-      purchase_price:
-        t.name === "purchase_price"
-          ? parseFloat(t.value)
-          : purchase.purchase_price,
-    });
+    const { name, value } = e.target;
+    setPurchase(prev => ({
+      ...prev,
+      [name]:
+        name === "quantity_purchased" || name === "purchase_price"
+          ? parseFloat(value)
+          : value,
+      total_cost: 0.0, // Reset or you could calculate it here
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,7 +58,7 @@ const RecordPurchaseForm: React.FC<RecordPurchaseFormProps> = ({
         <TextField
           fullWidth
           label="Quantity Purchased"
-          name="quantity"
+          name="quantity_purchased"
           type="number"
           inputProps={{ step: "0.01" }}
           value={purchase.quantity_purchased}
@@ -71,7 +68,7 @@ const RecordPurchaseForm: React.FC<RecordPurchaseFormProps> = ({
         <TextField
           fullWidth
           label="Purchase Price"
-          name="purchased_price"
+          name="purchase_price"
           type="number"
           inputProps={{ step: "0.01" }}
           value={purchase.purchase_price}

@@ -15,6 +15,8 @@ const RecordSaleForm: React.FC<RecordSaleFormProps> = ({
     product_sold: "",
     quantity_sold: 0.0,
     sale_price: 0.0,
+    total_sales: 0.0,
+    total_profit: 0.0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +27,8 @@ const RecordSaleForm: React.FC<RecordSaleFormProps> = ({
         t.name === "Quantity Sold" ? parseFloat(t.value) : sale.quantity_sold,
       sale_price:
         t.name === "Sale Price" ? parseFloat(t.value) : sale.sale_price,
+      total_sales: 0.0,
+      total_profit: 0.0,
     });
   };
 

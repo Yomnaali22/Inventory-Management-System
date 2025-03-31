@@ -42,12 +42,19 @@ const App: React.FC = () => {
     add_product(product);
   };
   const handleRecordSale = (sale: saleTransaction) => {
-    record_sale_transaction(sale);
+    record_sale_transaction({
+      ...sale,
+      total_sales: 0.0,
+      total_profit: 0.0,
+    });
     setActiveForm(null);
   };
 
   const handleRecordPurchase = async (purchase: PurchaseTransaction) => {
-    record_purchase_transaction(purchase);
+    record_purchase_transaction({
+      ...purchase,
+      total_cost: 0.0,
+    });
     setActiveForm(null);
   };
 

@@ -6,19 +6,10 @@ export interface Product {
   description: string;
 }
 
-export interface Sale {
-  total_sales: number;
-  total_profit: number;
-}
-
-export interface Purchase {
-  total_cost: number;
-}
-
 export interface Inventory {
   products: Product[] | [];
-  sales: (saleTransaction & Sale)[] | [];
-  purchases: (PurchaseTransaction & Purchase)[] | [];
+  sales: saleTransaction[] | [];
+  purchases: PurchaseTransaction[] | [];
 }
 
 export interface LoginResponse {
@@ -28,13 +19,16 @@ export interface LoginResponse {
 export interface saleTransaction {
   product_sold: string;
   quantity_sold: number;
-  sale_price: number;
+  sale_price: number; // for one product
+  total_sales: number;
+  total_profit: number;
 }
 
 export interface PurchaseTransaction {
   product_purchased: string;
   quantity_purchased: number;
   purchase_price: number;
+  total_cost: number;
 }
 
 export type FormType =
