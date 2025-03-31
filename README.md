@@ -8,6 +8,42 @@
 
 This project is an **Inventory Management System (IMS)** built in Rust for managing a small retail store's **inventory**, **sales**, and **purchases**. It allows store managers to effectively track and control products, sales, and purchases while providing a simple text-based user interface.
 
+
+📌 Important Setup Note: Data Storage Configuration
+JSON Data File Path
+This app uses a local JSON file to persist inventory, sales, and purchase data.
+You must specify the full path to both inventory json file and users file in your environment variables:
+
+Create a .env file in the project root with:
+
+ini
+Copy
+DATA_FILE_PATH=/path/to/your/data.json
+Example (Linux/macOS):
+
+ini
+Copy
+DATA_FILE_PATH=/home/user/inventory_data/data.json
+Example (Windows):
+
+ini
+Copy
+DATA_FILE_PATH=C:\Users\YourName\inventory_data\data.json
+The app will automatically:
+
+Create the file if it doesn’t exist.
+
+Read/write data to this location.
+
+Cloud Database Recommendation
+While the app works with local JSON storage, for production environments we strongly recommend using a cloud database (e.g., PostgreSQL, Firebase, or MongoDB) due to:
+
+Better reliability: No risk of local file corruption.
+
+Multi-user access: Safe concurrent writes.
+
+Scalability: Handles larger datasets efficiently.
+
 ## Features
 
 ### 1. **Inventory Management**
