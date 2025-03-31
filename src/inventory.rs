@@ -1,5 +1,5 @@
 use crate::parse_data::JsonData;
-use crate::transactions::{PurchaseTransaction, SaleTransaction};
+use crate::{PurchaseTransaction, SaleTransaction};
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::io::Result;
@@ -17,8 +17,6 @@ pub struct Inventory {
     pub sales: Vec<SaleTransaction>,
     pub purchases: Vec<PurchaseTransaction>,
 }
-
-// to prevent duplications or change to a non existent product
 
 impl Inventory {
     pub fn new() -> Inventory {

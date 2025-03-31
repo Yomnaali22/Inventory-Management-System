@@ -1,14 +1,12 @@
-use serde_json::{Value, json};
-use tokio::net::TcpListener;
-mod transactions;
-use axum::{Json, Router, http::Method, routing::get};
-use tower_http::cors::{Any, CorsLayer};
+// use serde_json::{Value, json};
+// use tokio::net::TcpListener;
+// mod transactions;
+// use axum::{Json, Router, http::Method, routing::get};
+// use tower_http::cors::{Any, CorsLayer};
 
 // imported from the root lib package (lib file)
-use lib::JsonData;
-use lib::process_user_input;
-use lib::{Inventory, Product};
-use lib::{PurchaseTransaction, SaleTransaction, Transaction};
+use shared::{Inventory, JsonData, PurchaseTransaction, SaleTransaction, process_user_input};
+
 // ✅ Move the async server logic into a separate function
 
 // ✅ Same function structure you provided, but with CORS added
@@ -35,27 +33,29 @@ fn main() -> Result<(), String> {
         Ok(data) => data,
         Err(err) => return Err(err.to_string()),
     };
-    let product: Product = Product {
-        name: String::from("Apple"),
-        description: String::from("Apple"),
-        quantity: 10.0,
-        price: 2.0,
-    };
 
-    let purchase_transaction: PurchaseTransaction = PurchaseTransaction {
-        product_purchased: String::from("Apple"),
-        purchase_price: 10.0,
-        quantity_purchased: 10.0,
-    };
     let sale_transaction = SaleTransaction {
-        product_sold: String::from("Apple"),
-        sale_price: 10.0,
-        quantity_sold: 5.0,
+        product_sold: "Laptop".to_string(),
+        sale_price: 1500.0,
+        quantity_sold: 3.0,
+        total_sales: 0.0,
+        total_profit: 0.0,
     };
 
-    sale_transaction.calculate_total_sales(&inventory); // calculate_total_sales has access the sale transaction through self
-    SaleTransaction::calculate_profit(&sale_transaction, &inventory)?;
-
+    match SaleTransaction::add_sale_transaction(&sale_transaction, &mut inventory) {
+        Ok(_) => println!("Sale transaction added successfully."),
+        Err(err) => return Err(err.to_string()),
+    };
+    let purchase_transaction = PurchaseTransaction {
+        product_purchased: "Laptop".to_string(),
+        purchase_price: 1500.0,
+        quantity_purchased: 3.0,
+        total_cost: 0.0, // add purchase will calculate for us
+    };
+    match PurchaseTransaction::add_purchase_transaction(&purchase_transaction, &mut inventory) {
+        Ok(_) => println!("Purchase transaction added successfully."),
+        Err(err) => return Err(err.to_string()),
+    }
     Inventory::generate_report(&inventory);
 
     Ok(())

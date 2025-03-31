@@ -1,8 +1,8 @@
-use lib::{
-    add_product, add_purchase, add_sale, authenticate, get_inventory, Inventory, Product,
-    PurchaseTransaction, SaleTransaction, User,
+use serde_json::{Value, json};
+use shared::{
+    Inventory, Product, PurchaseTransaction, SaleTransaction, User, add_product, add_purchase,
+    add_sale, authenticate, get_inventory,
 };
-use serde_json::{json, Value};
 use tauri::command;
 
 #[command]

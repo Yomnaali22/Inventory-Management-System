@@ -3,7 +3,7 @@
 use dotenv::{dotenv, from_filename};
 
 fn main() {
-    from_filename(".env_dev").ok();
+    from_filename(".env").ok();
     let my_var = std::env::var("INVENTORY_JSON_PATH").expect("INVENTORY_JSON_PATH must be set");
     println!("INVENTORY_JSON_PATH: {}", my_var);
     app_lib::run();
