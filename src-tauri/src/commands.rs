@@ -3,6 +3,7 @@ use shared::{
     Inventory, Product, PurchaseTransaction, SaleTransaction, User, add_product, add_purchase,
     add_sale, authenticate, get_inventory,
 };
+use std::fs;
 use tauri::command;
 
 #[command]
@@ -41,4 +42,13 @@ pub fn record_sale_transaction(sale_transaction: SaleTransaction) -> Value {
 pub fn record_purchase_transaction(purchase_transaction: PurchaseTransaction) -> Value {
     let purchase = add_purchase(purchase_transaction);
     purchase
+}
+
+#[command]
+pub fn export_report(file_name: String) -> Result<String, String> {
+    let inventory = get_inventory()?;
+    let path = format!("reports/{}", file_name);
+    let body = serde_json::to_string_pretty(&inventory).map_err(|e| e.to_string())?;
+    fs::write(&path, body).map_err(|e| e.to_string())?;
+    Ok(path)
 }
