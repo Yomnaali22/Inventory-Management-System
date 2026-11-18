@@ -1,7 +1,7 @@
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 mod commands;
 use commands::{
-    add_product_to_inventory, inventory, login, record_purchase_transaction,
+    add_product_to_inventory, export_report, inventory, login, record_purchase_transaction,
     record_sale_transaction,
 };
 
@@ -22,7 +22,8 @@ pub fn run() {
             add_product_to_inventory,
             login,
             record_sale_transaction,
-            record_purchase_transaction
+            record_purchase_transaction,
+            export_report
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
